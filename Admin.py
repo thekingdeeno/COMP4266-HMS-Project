@@ -135,48 +135,49 @@ class Admin:
             while True:
                 print("-----Update Doctor`s Details-----")
                 print('ID |          Full name           |  Speciality')
-                self.view(doctors)
+                self.view(self,doctors)
                 try:
                     index = int(input('Enter the ID of the doctor: ')) - 1
-                    doctor_index=self.find_index(index,doctors)
+                    doctor_index=self.find_index(self,index,doctors)
+
                     if doctor_index!=False:
-                
+
+                        print('Choose the field to be updated:')
+                        print(' 1 First name')
+                        print(' 2 Surname')
+                        print(' 3 Speciality')
+                        op = int(input('Input: ')) # make the user input lowercase
+                        newInput = input('Enter update: ').lower()
+                        doc = doctors[index]
+                        if op == 1:
+                            doc.set_first_name(newInput)
+                        elif op == 2: 
+                            doc.set_surname(newInput)
+                        elif op == 3:
+                            doc.set_speciality(newInput)
+
+                        print('Doctor Updated Successfylly \n',doctors[index])
                         break
                         
                     else:
                         print("Doctor not found")
 
-                    
-                        # doctor_index is the ID mines one (-1)  
-                        
-
-                except ValueError: # the entered id could not be changed into an int
+                except ValueError:
                     print('The ID entered is incorrect')
-
-            # menu
-            print('Choose the field to be updated:')
-            print(' 1 First name')
-            print(' 2 Surname')
-            print(' 3 Speciality')
-            op = int(input('Input: ')) # make the user input lowercase
-
-            #ToDo8
-            pass
 
         # Delete
         elif op == '4':
             print("-----Delete Doctor-----")
             print('ID |          Full Name           |  Speciality')
-            self.view(doctors)
+            self.view(self, doctors)
 
-            doctor_index = input('Enter the ID of the doctor to be deleted: ')
-            #ToDo9
-            pass
-
-           
-            print('The id entered is incorrect')
-
-        # if the id is not in the list of patients
+            index = int(input('Enter the ID of the doctor to be deleted: ')) -1
+            doctor_index=self.find_index(self,index,doctors)
+            if doctor_index:
+                doctors.pop(index)
+                self.view(self,doctors)
+            else:
+                print('The id entered is incorrect')
         else:
             print('Invalid operation choosen. Check your spelling!')
 
@@ -239,6 +240,8 @@ class Admin:
                 # link the patients to the doctor and vice versa
                 #ToDo11
                 pass
+                patients[patient_index].link(doctors[doctor_index].full_name())
+                self.view(patients)
                 
                 print('The patient is now assign to the doctor.')
 
@@ -259,22 +262,19 @@ class Admin:
         """
         print("-----Discharge Patient-----")
 
-        patient_index = input('Please enter the patient ID: ')
+        self.view(self, patients)
+        patient_index = int(input('Please enter the patient ID: ')) - 1
+        patient = patients[patient_index]
+        discharge_patients.append(patient)
+        patients.pop(patient_index)
 
-        #ToDo12
-        pass
+        print('Patient Discharged Successfuly')
+        print(patients,'\n', discharge_patients)
 
     def view_discharge(self, discharged_patients):
-        """
-        Prints the list of all discharged patients
-        Args:
-            discharge_patients (list<Patients>): the list of all the non-active patients
-        """
-
         print("-----Discharged Patients-----")
         print('ID |          Full Name           |      Doctor`s Full Name      | Age |    Mobile     | Postcode ')
-        #ToDo13
-        pass
+        self.view(self, discharged_patients)
 
     def update_details(self):
         """
@@ -288,9 +288,8 @@ class Admin:
         op = int(input('Input: '))
 
         if op == 1:
-            #ToDo14
-            pass
-
+            newUsername = input('Enter new username: ')
+            self.__username = newUsername
         elif op == 2:
             password = input('Enter the new password: ')
             # validate the password
@@ -298,10 +297,10 @@ class Admin:
                 self.__password = password
 
         elif op == 3:
-            #ToDo15
-            pass
+            newAddress = input('Enter new Address: ')
+            self.__address = newAddress
 
         else:
-            #ToDo16
-            pass
+            print('Invalid option selected')
 
+        print(f'{self.__username} {self.__address}')

@@ -42,16 +42,11 @@ def main():
           Admin.doctor_management(Admin, doctors)
 
         elif op == '2':
-            # 2- View or discharge patients
-            #ToDo2
-            pass
-
             while True:
                 op = input('Do you want to discharge a patient(Y/N):').lower()
 
                 if op == 'yes' or op == 'y':
-                    #ToDo3
-                    pass
+                    Admin.discharge(Admin, patients, discharged_patients)
 
                 elif op == 'no' or op == 'n':
                     break
@@ -61,9 +56,7 @@ def main():
                     print('Please answer by yes or no.')
         
         elif op == '3':
-            # 3 - view discharged patients
-            #ToDo4
-            pass
+            Admin.view_discharge(Admin, discharged_patients)
 
         elif op == '4':
             # 4- Assign doctor to a patient
@@ -74,9 +67,7 @@ def main():
             admin.update_details()
 
         elif op == '6':
-            # 6 - Quit
-            #ToDo5
-            pass
+            running = False
 
         else:
             # the user did not enter an option that exists in the menu

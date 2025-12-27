@@ -17,36 +17,25 @@ class Doctor:
 
     
     def full_name(self) :
-        #ToDo1
-        pass
+        return f'{self.__first_name} {self.__surname}'
 
     def get_first_name(self) :
-        #ToDo2
-        pass
         return self.__first_name
 
     def set_first_name(self, new_first_name):
-        #ToDo3
-        pass
+        self.__first_name = new_first_name
 
     def get_surname(self) :
-        #ToDo4
-        pass
         return self.__surname
-        
 
     def set_surname(self, new_surname):
-        #ToDo5
-        pass
+        self.__surname = new_surname
 
     def get_speciality(self) :
-        #ToDo6
-        pass
         return self.__surname
 
     def set_speciality(self, new_speciality):
-        #ToDo7
-        pass
+        self.__speciality = new_speciality
 
     def add_patient(self, patient):
         self.patients.append(patient)
