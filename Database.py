@@ -40,6 +40,14 @@ class Database:
                 return {"username": item[0], "password": item[1], "postcode": item[2]}
         return data
     
+    def updateAdmin(self, username, password, postcode):
+        adminPath = f'database/{self.__admin_table}.txt'
+        with open(adminPath,'r') as file:
+            data = file.readlines()
+        data[1] = f'{username}|{password}|{postcode}'
+        with open(adminPath, 'w') as file:
+            file.writelines(data)
+    
     def createDoctor(self, first_name, surname, speciality):
         with open('database/doctors.txt', 'a') as file:
             file.write(f'\n{first_name}|{surname}|{speciality}|[]|[]|')
@@ -78,5 +86,35 @@ class Database:
             for number, line in enumerate(f_data):
                 if number == id:
                     file.write(line.strip('\n'))
+                if number != id+1 and number != id:
+                    file.write(line)
+    
+    def addPatient(self, section, first_name, surname, age, mobile, postcode):
+        tablename = ''
+        if section == 'active':
+            tablename = self.__acive_patients_table
+        elif section == 'discharged':
+            tablename = self.__discharged_patients_table
+        else:
+            print('Invalid patient category')
+
+        with open(f'database/{tablename}.txt', 'a') as file:
+            file.write(f'\n{first_name}|{surname}|{age}|{mobile}|{postcode}|')
+
+    def removePatient(self, section, id):
+        tablename = ''
+        if section == 'active':
+            tablename = self.__acive_patients_table
+        elif section == 'discharged':
+            tablename = self.__discharged_patients_table
+        else:
+            print('Invalid patient category')
+
+        with open(f'database/{tablename}.txt', 'r') as file:
+            f_data = file.readlines()
+        with open(f'database/{tablename}.txt', 'w') as file:
+            for number, line in enumerate(f_data):
+                if number == id:
+                    file.write(line)
                 if number != id+1 and number != id:
                     file.write(line)

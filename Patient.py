@@ -35,3 +35,6 @@ class Patient:
 
     def __str__(self):
         return f'{self.full_name():^30}|{self.__doctor:^30}|{self.__age:^5}|{self.__mobile:^15}|{self.__postcode:^10}'
+    
+    def get_data(self):
+        return [self.__first_name, self.__surname, self.__age, self.__mobile, self.__postcode]

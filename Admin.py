@@ -272,7 +272,10 @@ class Admin:
         patient_index = int(input('Please enter the patient ID: ')) - 1
         patient = patients[patient_index]
         discharge_patients.append(patient)
+        p_data = patient.get_data()
+        Database().addPatient('discharged', p_data[0], p_data[1], p_data[2], p_data[3], p_data[4])
         patients.pop(patient_index)
+        Database().removePatient('active', patient_index)
 
         print('Patient Discharged Successfuly')
         print(patients,'\n', discharge_patients)
@@ -294,7 +297,7 @@ class Admin:
         op = int(input('Input: '))
 
         if op == 1:
-            newUsername = input('Enter new username: ')
+            newUsername = input('Enter new username: ').lower()
             self.__username = newUsername
         elif op == 2:
             password = input('Enter the new password: ')
@@ -308,5 +311,6 @@ class Admin:
 
         else:
             print('Invalid option selected')
+        Database().updateAdmin(self.__username, self.__password, self.__address)
 
         print(f'{self.__username} {self.__address}')
