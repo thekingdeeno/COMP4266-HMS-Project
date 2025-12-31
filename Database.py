@@ -74,7 +74,9 @@ class Database:
     def deleteDoctor(self, id):
         with open('database/doctors.txt', 'r') as file:
             f_data = file.readlines()
-        # with open('database/doctors.txt', 'w') as file:
-        for number, line in enumerate(f_data):
-            if number != id:
-                print(line)
+        with open('database/doctors.txt', 'w') as file:
+            for number, line in enumerate(f_data):
+                if number == id:
+                    file.write(line.strip('\n'))
+                if number != id+1 and number != id:
+                    file.write(line)

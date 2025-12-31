@@ -2,4 +2,3 @@ f_name|surname|speciality|patients|appointments
 John|Smith|Internal Med.|[]|[]|
 Jone|Smith|Pediatrics|[]|[]|
 Jone|Carlos|Cardiology|[]|[]|
-king|deeno|Christianity|[]|[]
