@@ -1,5 +1,5 @@
 from Doctor import Doctor
-
+from Database import Database
 
 class Admin:
     """A class that deals with the Admin operations"""
@@ -117,6 +117,7 @@ class Admin:
             pass# add the doctor ...
             if name_exists == False:
                 doctors.append(Doctor(first_name, surname, speciality))
+                Database().createDoctor(first_name, surname, speciality)
                                                          # ... to the list of doctors
                 print('Doctor registered.')
 
@@ -151,11 +152,15 @@ class Admin:
                         doc = doctors[index]
                         if op == 1:
                             doc.set_first_name(newInput)
+                            field = 'first_name'
                         elif op == 2: 
                             doc.set_surname(newInput)
+                            field = 'surname'
                         elif op == 3:
                             doc.set_speciality(newInput)
+                            field = 'speciality'
 
+                        Database().updateDoctor(index, field, newInput)
                         print('Doctor Updated Successfylly \n',doctors[index])
                         break
                         
@@ -175,6 +180,7 @@ class Admin:
             doctor_index=self.find_index(self,index,doctors)
             if doctor_index:
                 doctors.pop(index)
+                Database().deleteDoctor(index)
                 self.view(self,doctors)
             else:
                 print('The id entered is incorrect')

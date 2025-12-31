@@ -1,3 +1,4 @@
+from Database import Database
 class Doctor:
     """A class that deals with the Doctor operations"""
 
@@ -37,9 +38,17 @@ class Doctor:
     def set_speciality(self, new_speciality):
         self.__speciality = new_speciality
 
+    def get_patients(self):
+        return self.__patients
+
     def add_patient(self, patient):
         self.patients.append(patient)
 
+    def get_appointments(self):
+        return self.__appointments
+
+    def add_appointments(self, appointment):
+        self.__appointments == appointment
 
     def __str__(self) :
         return f'{self.full_name():^30}|{self.__speciality:^15}'

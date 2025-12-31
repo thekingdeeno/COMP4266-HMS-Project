@@ -1,18 +1,31 @@
 # Imports
+import json
 from Admin import Admin
 from Doctor import Doctor
 from Patient import Patient
+from Database import Database
 
 def main():
     """
     the main function to be ran when the program runs
     """
+    database = Database()
 
     # Initialising the actors
-    admin = Admin('admin','123','B1 1AB') # username is 'admin', password is '123'
-    doctors = [Doctor('John','Smith','Internal Med.'), Doctor('Jone','Smith','Pediatrics'), Doctor('Jone','Carlos','Cardiology')]
-    patients = [Patient('Sara','Smith', 20, '07012345678','B1 234'), Patient('Mike','Jones', 37,'07555551234','L2 2AB'), Patient('Daivd','Smith', 15, '07123456789','C1 ABC')]
+    admin_data = database.initialiseData('admin')
+    admin = Admin(admin_data['username'], admin_data['password'], admin_data['postcode']) # username is 'admin', password is '123'
+    doctors = []
+    patients = []
     discharged_patients = []
+
+    for doc in database.initialiseData('doctors'):
+        doctors.append(Doctor(doc[0], doc[1], doc[2]))
+
+    for p in database.initialiseData('patients'):
+        patients.append(Patient(p[0], p[1], p[2], p[3], p[4]))
+    
+    for dis in database.initialiseData('discharged'):
+        discharged_patients.append(Patient(dis[0], dis[1], dis[2], dis[3], dis[4]))
 
     # keep trying to login tell the login details are correct
     while True:
