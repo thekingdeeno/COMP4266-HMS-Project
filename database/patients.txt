@@ -1,4 +1,4 @@
-f_name|surname|age|mobile|postcode|doctor
-Sara|Smith|20|07012345678|B1 234|
-Mike|Jones|37|07555551234|L2 2AB|
-David|Smith|15|07123456789|C1 ABC|
+f_name|surname|age|mobile|postcode|doctor|symptoms
+Sara|Smith|20|07012345678|B1 234|John Smith|[fever]|
+Mike|Jones|37|07555551234|L2 2AB|None|[tummy-pain]|
+David|Smith|15|07123456789|C1 ABC|None|[]|

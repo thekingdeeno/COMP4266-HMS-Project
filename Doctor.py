@@ -2,7 +2,7 @@ from Database import Database
 class Doctor:
     """A class that deals with the Doctor operations"""
 
-    def __init__(self, first_name, surname, speciality):
+    def __init__(self, first_name, surname, speciality, patients = [], appointments = []):
         """
         Args:
             first_name (string): First name
@@ -13,8 +13,8 @@ class Doctor:
         self.__first_name = first_name
         self.__surname = surname
         self.__speciality = speciality
-        self.__patients = []
-        self.__appointments = []
+        self.__patients = patients
+        self.__appointments = appointments
 
     
     def full_name(self) :
@@ -33,7 +33,7 @@ class Doctor:
         self.__surname = new_surname
 
     def get_speciality(self) :
-        return self.__surname
+        return self.__speciality
 
     def set_speciality(self, new_speciality):
         self.__speciality = new_speciality
@@ -42,13 +42,16 @@ class Doctor:
         return self.__patients
 
     def add_patient(self, patient):
-        self.patients.append(patient)
+        self.__patients.append(patient)
+
+    def del_patient(self, patient):
+        self.__patients.remove(patient)
 
     def get_appointments(self):
         return self.__appointments
 
-    def add_appointments(self, appointment):
-        self.__appointments == appointment
+    def add_appointment(self, date):
+        self.__appointments == self.__appointments.append(date)
 
     def __str__(self) :
         return f'{self.full_name():^30}|{self.__speciality:^15}'

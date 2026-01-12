@@ -34,7 +34,7 @@ class Database:
             if tablename == self.__doctors_table:
                 data.append([item[0], item[1], item[2], item[3], item[4]])
             elif tablename == self.__acive_patients_table or tablename == self.__discharged_patients_table:
-                data.append([item[0], item[1], item[2], item[3], item[4]])
+                data.append([item[0], item[1], item[2], item[3], item[4], item[5], item[6]])
             elif tablename == self.__admin_table:
                 # return [item[0], item[1], item[2]]
                 return {"username": item[0], "password": item[1], "postcode": item[2]}
@@ -69,13 +69,29 @@ class Database:
         elif field == 'speciality':
             speciality = value
         elif field == 'patients':
-            patients.append(value)
+            comma = ","
+            if len(patients[:-1][1:]) == 0:
+                comma = ""
+            value = patients[:-1] + comma + value + ']'
+            patients = value
+        elif field == 'patients-rm':
+            patients = patients.replace(f'{value},', '')
+            patients = patients.replace(value, '')
+            if patients[-2] == ',':
+                patients = patients[:-2] + ']'
         elif field == 'appointments':
-            appointments.append(value)
+            comma = ","
+            if len(appointments[:-1][1:]) == 0:
+                comma = ""
+            value = appointments[:-1] + comma + value + ']'
+            appointments = value
 
         with open('database/doctors.txt', 'r') as file:
             f_data = file.readlines()
-        f_data[id+1] = '{}|{}|{}|{}|{}|'.format(first_name, surname, speciality, patients, appointments)
+            newline='\n'
+            if id+2 == len(f_data):
+                newline = ''
+        f_data[id+1] = '{}|{}|{}|{}|{}|{}'.format(first_name, surname, speciality, patients, appointments, newline)
         with open('database/doctors.txt', 'w') as file:
             file.writelines(f_data)
 
@@ -84,8 +100,11 @@ class Database:
             f_data = file.readlines()
         with open('database/doctors.txt', 'w') as file:
             for number, line in enumerate(f_data):
-                if number == id:
-                    file.write(line.strip('\n'))
+                if number == id :
+                    l = line
+                    if len(f_data) == number + 2:
+                        l = l.strip('\n')
+                    file.write(l)
                 if number != id+1 and number != id:
                     file.write(line)
     
@@ -99,7 +118,7 @@ class Database:
             print('Invalid patient category')
 
         with open(f'database/{tablename}.txt', 'a') as file:
-            file.write(f'\n{first_name}|{surname}|{age}|{mobile}|{postcode}|')
+            file.write(f'\n{first_name}|{surname}|{age}|{mobile}|{postcode}|None|[]|')
 
     def removePatient(self, section, id):
         tablename = ''
@@ -115,6 +134,40 @@ class Database:
         with open(f'database/{tablename}.txt', 'w') as file:
             for number, line in enumerate(f_data):
                 if number == id:
-                    file.write(line)
+                    l = line
+                    if len(f_data) == number + 2:
+                        l = l.strip('\n')
+                    file.write(l)
                 if number != id+1 and number != id:
                     file.write(line)
+
+
+    def updatePatient(self, id, field, value):
+        patient = self.initialiseData('patients')[id]
+        
+        first_name = patient[0]
+        surname = patient[1]
+        age = patient[2]
+        mobile = patient[3]
+        postcode = patient[4]
+        doctor = patient[5]
+        symptoms = patient[6]
+
+        if field == 'doctor':
+            doctor = value
+        
+        elif field == 'symptoms':
+            comma = ","
+            if len(symptoms[:-1][1:]) == 0:
+                comma = ""
+            value = symptoms[:-1] + comma + value + ']'
+            symptoms = value
+        
+        with open('database/patients.txt', 'r') as file:
+            f_data = file.readlines()
+            newline='\n'
+            if id+2 == len(f_data):
+                newline = ''
+        f_data[id+1] = '{}|{}|{}|{}|{}|{}|{}|{}'.format(first_name, surname, age, mobile, postcode, doctor, symptoms, newline)
+        with open('database/patients.txt', 'w') as file:
+            file.writelines(f_data)
